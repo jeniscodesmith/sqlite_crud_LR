@@ -77,6 +77,8 @@ class _LoginScreenState extends State<LoginScreen> {
 
                     if (LocalDatabase.indexOfEmail != -1) {
                       if (LocalDatabase.indexOfEmailPassword != -1) {
+
+                        LocalDatabase.getUserData(LocalDatabase.indexOfEmailPassword);
                         Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(

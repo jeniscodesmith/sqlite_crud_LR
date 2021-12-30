@@ -16,6 +16,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
   TextEditingController _nameController = TextEditingController();
   TextEditingController _emailController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
+  TextEditingController _aboutController = TextEditingController();
+  TextEditingController _locationController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -37,6 +39,28 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   validator: (value) {
                     if (value.isEmpty) {
                       return ' Enter Your Name';
+                    }
+                    FocusScope.of(context).unfocus();
+                  },
+                ),
+                const SizedBox(height: 40),
+                CustomTextField(
+                  controller: _aboutController,
+                  hintText: 'About',
+                  validator: (value) {
+                    if (value.isEmpty) {
+                      return 'Enter something about you';
+                    }
+                    FocusScope.of(context).unfocus();
+                  },
+                ),
+                const SizedBox(height: 40),
+                CustomTextField(
+                  controller: _locationController,
+                  hintText: 'Location',
+                  validator: (value) {
+                    if (value.isEmpty) {
+                      return ' Enter Your location';
                     }
                     FocusScope.of(context).unfocus();
                   },
@@ -85,10 +109,21 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             name: _nameController.text,
                             email: _emailController.text,
                             password: _passwordController.text);
-
+                        await LocalDatabase.checkUserRegisteredOrNot(
+                            _emailController.text);
+                        if (LocalDatabase.indexOfEmail != -1) {
+                          await LocalDatabase.addUserData(
+                              LocalDatabase.indexOfEmail,
+                              name: _nameController.text,
+                              about: _aboutController.text,
+                              location: _locationController.text);
+                        }
                         _nameController.clear();
                         _emailController.clear();
                         _passwordController.clear();
+                        _aboutController.clear();
+                        _locationController.clear();
+
 
                         final snackBar =
                             SnackBar(content: Text('Registered successfully!'));

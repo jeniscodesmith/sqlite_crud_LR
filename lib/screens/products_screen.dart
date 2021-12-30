@@ -34,6 +34,16 @@ class _ProductsScreenState extends State<ProductsScreen> {
       appBar: AppBar(
         title: Text('Products'),
       ),
+      drawer: Drawer(
+        child: Column(
+          children: [
+            DrawerHeader(child: Container()),
+            Text(LocalDatabase.userData.name),
+            Text(LocalDatabase.userData.about),
+            Text(LocalDatabase.userData.location),
+          ],
+        ),
+      ),
       body: ListView.builder(
           itemCount: ProductDatabase.productList.length,
           itemBuilder: (context, index) {
